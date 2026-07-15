@@ -1,8 +1,8 @@
 /* ===== KGN Design-System =====
    Markenfarben aus KGN_Logos.svg (digital): Rot #d40000, Blau #0000d4, Gelb #ffcc00 */
 :root {
-  --kgn-rot: #d40000;
-  --kgn-rot-dunkel: #9e0000;
+  --kgn-rot: #db0000;
+  --kgn-rot-dunkel: #a30000;
   --kgn-blau: #0000d4;
   --kgn-gelb: #ffcc00;
   --tinte: #14141f;

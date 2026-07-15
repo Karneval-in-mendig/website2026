@@ -8,16 +8,13 @@ interface Props {
 const { termine, kompakt = false } = Astro.props;
 const monate = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
 const wochentage = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
-const kategorieLabel: Record<string, string> = {
-  sitzung: 'Sitzung', umzug: 'Umzug', party: 'Party', verein: 'Verein', sonstiges: '',
-};
 ---
 <ol class="termin-liste" class:list={{ kompakt }}>
   {termine.map((t) => {
     const d = t.data.datum;
     return (
       <li class="termin card">
-        <div class="termin-datum" style={`--akzent: ${t.data.kategorie === 'party' ? 'var(--kgn-gelb)' : t.data.kategorie === 'umzug' ? 'var(--kgn-blau)' : 'var(--kgn-rot)'}`}>
+        <div class="termin-datum">
           <span class="tag">{d.getDate()}</span>
           <span class="monat">{monate[d.getMonth()]} {d.getFullYear()}</span>
           <span class="wtag">{wochentage[d.getDay()]}.</span>
@@ -28,7 +25,6 @@ const kategorieLabel: Record<string, string> = {
             {t.data.uhrzeit && <span>{t.data.uhrzeit}</span>}
             {t.data.uhrzeit && ' · '}
             <span>{t.data.ort}</span>
-            {kategorieLabel[t.data.kategorie] && <span class="termin-kat"> {kategorieLabel[t.data.kategorie]}</span>}
           </p>
           {!kompakt && t.data.beschreibung && <p class="termin-beschreibung">{t.data.beschreibung}</p>}
           {t.data.ticketlink && <a class="btn btn-gelb termin-ticket" href={t.data.ticketlink} target="_blank" rel="noopener">Tickets</a>}
@@ -60,23 +56,13 @@ const kategorieLabel: Record<string, string> = {
     padding: 0.6rem 0.4rem;
     border-radius: 10px;
     background: var(--papier-warm);
-    border-top: 4px solid var(--akzent, var(--kgn-rot));
+    border-top: 4px solid var(--kgn-rot);
   }
   .termin-datum .tag { font-size: 1.9rem; font-weight: 800; line-height: 1; }
   .termin-datum .monat { font-size: 0.78rem; font-weight: 700; color: var(--tinte-soft); }
   .termin-datum .wtag { font-size: 0.72rem; color: var(--tinte-soft); }
   .termin-info h3 { margin: 0 0 0.15rem; font-size: 1.1rem; }
   .termin-info p { margin: 0; color: var(--tinte-soft); font-size: 0.92rem; }
-  .termin-kat {
-    display: inline-block;
-    margin-left: 0.5rem;
-    padding: 0.1rem 0.6rem;
-    border-radius: 999px;
-    background: var(--papier-warm);
-    border: 1px solid var(--linie);
-    font-size: 0.75rem;
-    font-weight: 700;
-  }
   .termin-ticket { margin-top: 0.6rem; padding: 0.45rem 1.1rem; font-size: 0.85rem; }
   .termin-beschreibung { margin-top: 0.4rem !important; }
 </style>
