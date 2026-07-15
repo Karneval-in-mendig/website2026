@@ -1,7 +1,7 @@
 ---
 name: "Schloffmötschen"
 claim: "Mendiger Original – jeck aus Tradition."
-farbe: "#ffcc00"
+farbe: "#d40000"
 reihenfolge: 4
 externe_url: "http://schloffmoetschen.de"
 email: "beisitzer2@karneval-in-mendig.de"

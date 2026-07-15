@@ -1,9 +1,9 @@
 ---
 name: "Jecke Füüßje"
 claim: "Tanz, Show und jede Menge Herzblut."
-farbe: "#d40000"
+farbe: "#6f2da8"
 reihenfolge: 5
-instagram: "jeckefueuessje"
+instagram: "jecke_fuueessje"
 email: "jeckefueuesje@karneval-in-mendig.de"
 ansprechpartner: "Lena Diensberg"
 ---

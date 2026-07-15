@@ -2,7 +2,7 @@
 name: "Herrenballett „Zarte Zehe“"
 kurzname: "Herrenballett"
 claim: "Seit über 55 Jahren Standing Ovations."
-farbe: "#0000d4"
+farbe: "#e6007e"
 reihenfolge: 2
 email: "heba@karneval-in-mendig.de"
 ansprechpartner: "John Virtue"

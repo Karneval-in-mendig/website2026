@@ -21,18 +21,20 @@ const news = (await getCollection('news')).sort(
   <section class="hero">
     <div class="container hero-inner">
       <div class="hero-text">
-        <span class="eyebrow">Seit 1897 jeck in Mendig</span>
-        <h1>Mit dreimol<br /><span class="hero-rot">Mennech Ahoi!</span></h1>
+        <span class="hero-eyebrow">Seit 1897 jeck in Mendig</span>
+        <h1>Mit dreimol<br /><span class="hero-gelb">Mennech Ahoi!</span></h1>
         <p class="hero-sub">
           Die Karnevalsgesellschaft Niedermendig 1897 e.V. – sechs Korporationen,
           ein weithin bekannter Sitzungskarneval und jede Menge Herzblut für die fünfte Jahreszeit.
         </p>
         <div class="hero-actions">
-          <a href={`${base}termine/`} class="btn btn-primary">Termine der Session</a>
-          <a href={`${base}mitglied-werden/`} class="btn btn-secondary">Mitglied werden</a>
+          <a href={`${base}termine/`} class="btn btn-gelb">Termine der Session</a>
+          <a href={`${base}mitglied-werden/`} class="btn hero-btn-ghost">Mitglied werden</a>
         </div>
       </div>
-      <img src={`${base}images/logos/kgn-jester-color.png`} alt="" class="hero-jester" />
+      <div class="hero-figur">
+        <img src={`${base}images/logos/kgn-jester-color.png`} alt="" class="hero-jester" />
+      </div>
     </div>
   </section>
 
@@ -101,30 +103,49 @@ const news = (await getCollection('news')).sort(
 <style>
   .hero {
     background:
-      radial-gradient(1200px 500px at 85% -10%, rgba(255, 204, 0, 0.18), transparent 60%),
-      radial-gradient(900px 400px at -10% 110%, rgba(0, 0, 212, 0.08), transparent 60%),
-      var(--papier);
+      radial-gradient(1100px 600px at 78% 20%, rgba(212, 0, 0, 0.55), transparent 62%),
+      radial-gradient(700px 420px at 12% 95%, rgba(0, 0, 212, 0.35), transparent 65%),
+      linear-gradient(160deg, #191925 0%, #14141f 100%);
+    color: #fff;
     overflow: hidden;
   }
   .hero-inner {
     display: grid;
-    grid-template-columns: 1.4fr 0.6fr;
+    grid-template-columns: 1.35fr 0.65fr;
     align-items: center;
     gap: 2rem;
-    padding-block: clamp(3rem, 9vw, 6rem);
+    padding-block: clamp(3.5rem, 10vw, 7rem);
   }
-  .hero-rot { color: var(--kgn-rot); }
-  .hero-sub { font-size: 1.15rem; color: var(--tinte-soft); max-width: 34rem; }
-  .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.8rem; }
-  .hero-jester {
-    max-height: 380px;
-    width: auto;
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--kgn-gelb);
+    margin-bottom: 1rem;
+  }
+  .hero-gelb { color: var(--kgn-gelb); }
+  .hero-sub { font-size: 1.18rem; color: rgba(255, 255, 255, 0.78); max-width: 34rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+  .hero-btn-ghost {
+    color: #fff !important;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+  }
+  .hero-btn-ghost:hover { border-color: #fff; }
+  .hero-figur {
     justify-self: center;
-    filter: drop-shadow(0 12px 32px rgba(26, 26, 36, 0.18));
+    padding: 1.6rem 2.2rem;
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 26px;
+    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.45);
+    rotate: 2.5deg;
   }
+  .hero-jester { max-height: 330px; width: auto; display: block; }
   @media (max-width: 760px) {
     .hero-inner { grid-template-columns: 1fr; }
-    .hero-jester { max-height: 220px; order: -1; }
+    .hero-figur { rotate: 0deg; padding: 1rem 1.4rem; }
+    .hero-jester { max-height: 190px; }
   }
   .korp-grid {
     display: grid;

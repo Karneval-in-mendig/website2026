@@ -1,13 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-  <rect width="400" height="400" fill="#faf7f2"/>
-  <circle cx="200" cy="160" r="64" fill="#e8e4dc"/>
-  <path d="M200 240c-80 0-128 44-136 120h272c-8-76-56-120-136-120z" fill="#e8e4dc"/>
-  <g transform="translate(276 60) scale(0.55)" opacity="0.9">
-    <path d="M60 90 C40 40 60 10 80 5 C70 35 75 55 85 75 Z" fill="#d40000"/>
-    <path d="M85 75 C95 45 120 35 140 45 C120 55 110 70 105 85 Z" fill="#ffcc00"/>
-    <path d="M60 90 C45 70 20 65 5 75 C25 80 40 90 50 100 Z" fill="#ffcc00"/>
-    <circle cx="80" cy="8" r="9" fill="#ffcc00"/>
-    <circle cx="138" cy="42" r="9" fill="#d40000"/>
-    <circle cx="8" cy="72" r="9" fill="#d40000"/>
+  <rect width="400" height="400" fill="#f6f5f2"/>
+  <circle cx="200" cy="175" r="62" fill="#e4e2dd"/>
+  <path d="M200 252c-80 0-128 44-136 120h272c-8-76-56-120-136-120z" fill="#e4e2dd"/>
+  <!-- Narrenkappe, sitzt auf dem Kopf -->
+  <g transform="translate(200 122) rotate(-6)">
+    <path d="M-52 6 C-70 -32 -58 -62 -40 -70 C-46 -42 -40 -22 -30 -4 Z" fill="#ffcc00"/>
+    <path d="M0 -12 C-8 -52 4 -80 22 -84 C14 -56 16 -34 18 -10 Z" fill="#d40000"/>
+    <path d="M30 -2 C48 -34 74 -42 90 -32 C70 -24 56 -12 46 4 Z" fill="#ffcc00"/>
+    <path d="M-56 4 C-20 -14 24 -14 52 6 C20 20 -24 20 -56 4 Z" fill="#d40000"/>
+    <circle cx="-42" cy="-70" r="10" fill="#d40000"/>
+    <circle cx="22" cy="-84" r="10" fill="#ffcc00"/>
+    <circle cx="90" cy="-33" r="10" fill="#d40000"/>
   </g>
 </svg>

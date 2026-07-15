@@ -1,7 +1,7 @@
 ---
 name: "Elferrat"
 claim: "19 Aktive, 41 Jahre Altersunterschied, eine Bühne."
-farbe: "#d40000"
+farbe: "#6d2e5b"
 reihenfolge: 1
 email: "elferat@karneval-in-mendig.de"
 ansprechpartner: "Jan Ammel"
