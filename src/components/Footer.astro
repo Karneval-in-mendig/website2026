@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+const base = import.meta.env.BASE_URL;
+const sponsoren = await getCollection('sponsoren');
+---
+{sponsoren.length > 0 && (
+  <section class="sponsor-band" aria-label="Sponsoren">
+    <div class="container">
+      <p class="sponsor-titel">Mit freundlicher Unterstützung unserer Sponsoren</p>
+      <div class="sponsor-logos">
+        {sponsoren.map((s) =>
+          s.data.url ? (
+            <a href={s.data.url} target="_blank" rel="noopener">
+              {s.data.logo ? <img src={`${base}${s.data.logo.replace(/^\//, '')}`} alt={s.data.name} loading="lazy" /> : s.data.name}
+            </a>
+          ) : (
+            <span>{s.data.logo ? <img src={`${base}${s.data.logo.replace(/^\//, '')}`} alt={s.data.name} loading="lazy" /> : s.data.name}</span>
+          )
+        )}
+      </div>
+    </div>
+  </section>
+)}
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <img src={`${base}images/logos/kgn-wordmark-black.png`} alt="Karneval in Mendig – KG Niedermendig 1897 e.V." class="footer-logo" />
+      <p>Karnevalsgesellschaft Niedermendig 1897 e.V.<br />Geschäftsstelle · Brunnenpfad 9 · 56743 Mendig</p>
+      <p><strong>Mit dreimol Mennech Ahoi!</strong></p>
+    </div>
+    <div>
+      <h3>Bankverbindung</h3>
+      <p>
+        Volksbank RheinAhrEifel eG<br />
+        IBAN: DE37 5776 1591 0101 9475 00<br />
+        BIC: GENODED1BNA
+      </p>
+      <p>
+        Kreissparkasse Mayen<br />
+        IBAN: DE07 5765 0010 0160 0353 90<br />
+        BIC: MALADE51MYN
+      </p>
+    </div>
+    <div>
+      <h3>Links</h3>
+      <ul class="footer-links">
+        <li><a href={`${base}mitglied-werden/`}>Mitglied werden</a></li>
+        <li><a href={`${base}termine/`}>Termine</a></li>
+        <li><a href={`${base}die-kg/kontakt/`}>Kontakt</a></li>
+        <li><a href={`${base}die-kg/impressum/`}>Impressum</a></li>
+        <li><a href={`${base}die-kg/datenschutz/`}>Datenschutz</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="konfetti-linie"></div>
+</footer>
+
+<style>
+  .sponsor-band {
+    background: var(--papier-warm);
+    border-top: 1px solid var(--linie);
+    padding-block: 2rem;
+  }
+  .sponsor-titel {
+    text-align: center;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--tinte-soft);
+    margin: 0 0 1.2rem;
+  }
+  .sponsor-logos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+  }
+  .sponsor-logos img { max-height: 56px; width: auto; filter: grayscale(1); opacity: 0.75; transition: 0.2s; }
+  .sponsor-logos a:hover img { filter: none; opacity: 1; }
+  .site-footer {
+    background: var(--tinte);
+    color: #cfcfda;
+    font-size: 0.92rem;
+  }
+  .site-footer h3 { color: #fff; font-size: 1rem; margin-bottom: 0.8rem; }
+  .site-footer a { color: var(--kgn-gelb); text-decoration: none; }
+  .site-footer a:hover { text-decoration: underline; }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 2.5rem;
+    padding-block: 3rem;
+  }
+  .footer-logo { max-width: 220px; filter: invert(1) brightness(1.6); margin-bottom: 1rem; }
+  .footer-links { list-style: none; margin: 0; padding: 0; }
+  .footer-links li { margin-bottom: 0.45rem; }
+</style>

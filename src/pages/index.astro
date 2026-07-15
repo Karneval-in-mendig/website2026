@@ -1,0 +1,156 @@
+---
+import Base from '../layouts/Base.astro';
+import TerminListe from '../components/TerminListe.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const heute = new Date();
+heute.setHours(0, 0, 0, 0);
+const termine = (await getCollection('termine'))
+  .filter((t) => t.data.datum >= heute)
+  .sort((a, b) => a.data.datum.getTime() - b.data.datum.getTime())
+  .slice(0, 3);
+const korporationen = (await getCollection('korporationen')).sort(
+  (a, b) => a.data.reihenfolge - b.data.reihenfolge
+);
+const news = (await getCollection('news')).sort(
+  (a, b) => b.data.datum.getTime() - a.data.datum.getTime()
+).slice(0, 2);
+---
+<Base title="Willkommen">
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <span class="eyebrow">Seit 1897 jeck in Mendig</span>
+        <h1>Mit dreimol<br /><span class="hero-rot">Mennech Ahoi!</span></h1>
+        <p class="hero-sub">
+          Die Karnevalsgesellschaft Niedermendig 1897 e.V. – sechs Korporationen,
+          ein weithin bekannter Sitzungskarneval und jede Menge Herzblut für die fünfte Jahreszeit.
+        </p>
+        <div class="hero-actions">
+          <a href={`${base}termine/`} class="btn btn-primary">Termine der Session</a>
+          <a href={`${base}mitglied-werden/`} class="btn btn-secondary">Mitglied werden</a>
+        </div>
+      </div>
+      <img src={`${base}images/logos/kgn-jester-color.png`} alt="" class="hero-jester" />
+    </div>
+  </section>
+
+  <section class="section section-warm">
+    <div class="container">
+      <span class="eyebrow">Session 2027</span>
+      <h2>Die nächsten Veranstaltungen</h2>
+      <TerminListe termine={termine} kompakt />
+      <p style="margin-top: 1.5rem;"><a href={`${base}termine/`} class="btn btn-secondary">Alle Termine ansehen</a></p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Wir sind die KGN</span>
+      <h2>Unsere Korporationen</h2>
+      <p class="prose">Sechs Korporationen, ein Verein: Bei uns findet jede und jeder seinen Platz im Mendiger Karneval.</p>
+      <div class="korp-grid">
+        {korporationen.map((k) => (
+          <a
+            href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
+            class="korp-karte card"
+            target={k.data.externe_url ? '_blank' : undefined}
+            rel={k.data.externe_url ? 'noopener' : undefined}
+            style={`--akzent: ${k.data.farbe}`}
+          >
+            <h3>{k.data.kurzname ?? k.data.name}</h3>
+            <p>{k.data.claim}</p>
+            <span class="korp-mehr">{k.data.externe_url ? 'Zur eigenen Website ↗' : 'Mehr erfahren →'}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-warm">
+    <div class="container gruss-grid">
+      <div class="prose">
+        <span class="eyebrow">Herzlich willkommen</span>
+        <h2>Grußwort des 1. Vorsitzenden</h2>
+        <p>Liebe Karnevalsfreunde,</p>
+        <p>
+          ich möchte Euch recht herzlich einladen, Euch über unsere Karnevalsgesellschaft, deren
+          Korporationen und unsere Aktivitäten zu informieren. Immer, wenn Ihr uns etwas mitteilen möchtet,
+          wenn Ihr Fragen habt oder – noch viel besser – wenn Ihr gerne bei uns in einer unserer
+          Korporationen mitmachen möchtet, nehmt gerne <a href={`${base}die-kg/kontakt/`}>Kontakt</a> mit uns auf.
+        </p>
+        <p>In diesem Sinne grüßt Euch, mit dreimol Mennech Ahoi!</p>
+        <p><strong>Achim Rothbrust</strong><br />1. Vorsitzender</p>
+      </div>
+      <div>
+        <span class="eyebrow">Aktuelles</span>
+        <h2>Neues aus dem Verein</h2>
+        {news.map((n) => (
+          <article class="card news-karte">
+            <h3>{n.data.titel}</h3>
+            <p>{n.data.teaser}</p>
+            <a href={`${base}news/${n.id}/`}>Weiterlesen →</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    background:
+      radial-gradient(1200px 500px at 85% -10%, rgba(255, 204, 0, 0.18), transparent 60%),
+      radial-gradient(900px 400px at -10% 110%, rgba(0, 0, 212, 0.08), transparent 60%),
+      var(--papier);
+    overflow: hidden;
+  }
+  .hero-inner {
+    display: grid;
+    grid-template-columns: 1.4fr 0.6fr;
+    align-items: center;
+    gap: 2rem;
+    padding-block: clamp(3rem, 9vw, 6rem);
+  }
+  .hero-rot { color: var(--kgn-rot); }
+  .hero-sub { font-size: 1.15rem; color: var(--tinte-soft); max-width: 34rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.8rem; }
+  .hero-jester {
+    max-height: 380px;
+    width: auto;
+    justify-self: center;
+    filter: drop-shadow(0 12px 32px rgba(26, 26, 36, 0.18));
+  }
+  @media (max-width: 760px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-jester { max-height: 220px; order: -1; }
+  }
+  .korp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2rem;
+  }
+  .korp-karte {
+    padding: 1.6rem;
+    text-decoration: none;
+    color: var(--tinte);
+    border-top: 5px solid var(--akzent);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    flex-direction: column;
+  }
+  .korp-karte:hover { transform: translateY(-4px); box-shadow: 0 8px 32px rgba(26, 26, 36, 0.14); }
+  .korp-karte h3 { margin-bottom: 0.3rem; }
+  .korp-karte p { color: var(--tinte-soft); flex: 1; margin: 0 0 1rem; }
+  .korp-mehr { font-weight: 700; color: var(--akzent); font-size: 0.92rem; }
+  .gruss-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+  }
+  .news-karte { padding: 1.4rem; margin-bottom: 1rem; }
+  .news-karte h3 { font-size: 1.05rem; }
+  .news-karte p { color: var(--tinte-soft); font-size: 0.95rem; }
+</style>

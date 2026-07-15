@@ -1,0 +1,72 @@
+---
+import Base from '../../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+---
+<Base title="Kontakt">
+  <section class="section">
+    <div class="container kontakt-grid">
+      <div class="prose">
+        <span class="eyebrow">Die KG</span>
+        <h1>Kontakt</h1>
+        <p>
+          Vielen Dank für Ihr Interesse an unserer Karnevalsgesellschaft Niedermendig 1897 e.V.
+          Gerne stehen wir Ihnen für Anregungen, Rückfragen und Anfragen über unsere Geschäftsstelle
+          zur Verfügung:
+        </p>
+        <p>
+          <strong>Karnevalsgesellschaft Niedermendig 1897 e.V.</strong><br />
+          Geschäftsstelle<br />
+          Brunnenpfad 9<br />
+          56743 Mendig
+        </p>
+        <p>
+          Telefon: <a href="tel:+491749741894">+49 174 97 41 89 4</a><br />
+          E-Mail: <a href="mailto:geschaeftsstelle@karneval-in-mendig.de">geschaeftsstelle@karneval-in-mendig.de</a>
+        </p>
+        <p>
+          Ihr wollt bei uns mitmachen? Am schnellsten geht es über den
+          <a href={`${base}mitglied-werden/`}>Online-Mitgliedsantrag</a>.
+        </p>
+      </div>
+      <form class="card kontakt-form" method="post" action="/api/kontakt.php" data-hinweis="wird mit IONOS-Umzug aktiviert">
+        <h2>Schreibt uns</h2>
+        <label>Name *<input type="text" name="name" required autocomplete="name" /></label>
+        <label>E-Mail-Adresse *<input type="email" name="email" required autocomplete="email" /></label>
+        <label>Betreff<input type="text" name="betreff" /></label>
+        <label>Ihre Nachricht *<textarea name="nachricht" rows="6" required></textarea></label>
+        <label class="checkbox">
+          <input type="checkbox" name="datenschutz" required />
+          <span>Ich bestätige, dass meine Daten im Rahmen der <a href={`${base}die-kg/datenschutz/`}>Datenschutzerklärung</a> verarbeitet werden dürfen. *</span>
+        </label>
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <button type="submit" class="btn btn-primary">Nachricht senden</button>
+        <p class="form-hinweis">* Pflichtfelder</p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .kontakt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    align-items: start;
+  }
+  .kontakt-form { padding: 2rem; display: grid; gap: 1rem; }
+  .kontakt-form label { display: grid; gap: 0.3rem; font-weight: 600; font-size: 0.92rem; }
+  .kontakt-form input:not([type='checkbox']), .kontakt-form textarea {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--linie);
+    border-radius: 8px;
+    font: inherit;
+  }
+  .kontakt-form input:focus, .kontakt-form textarea:focus {
+    outline: 2px solid var(--kgn-blau);
+    outline-offset: 1px;
+  }
+  .checkbox { grid-template-columns: auto 1fr; align-items: start; font-weight: 400 !important; }
+  .checkbox input { margin-top: 0.3rem; }
+  .hp { position: absolute; left: -9999px; }
+  .form-hinweis { margin: 0; font-size: 0.8rem; color: var(--tinte-soft); }
+</style>

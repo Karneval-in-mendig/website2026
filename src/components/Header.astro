@@ -1,0 +1,99 @@
+---
+const base = import.meta.env.BASE_URL;
+const nav = [
+  { href: `${base}korporationen/`, label: 'Korporationen' },
+  { href: `${base}termine/`, label: 'Termine' },
+  { href: `${base}die-kg/vorstand/`, label: 'Die KG' },
+  { href: `${base}die-kg/sponsoren/`, label: 'Sponsoren' },
+  { href: `${base}die-kg/kontakt/`, label: 'Kontakt' },
+];
+---
+<div class="konfetti-linie"></div>
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={base} class="brand">
+      <img src={`${base}images/logos/kgn-jester-color.png`} alt="" class="brand-jester" />
+      <span class="brand-text">
+        <strong>Karneval in Mendig</strong>
+        <small>KG Niedermendig 1897 e.V.</small>
+      </span>
+    </a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-burger" aria-label="Menü öffnen">
+      <span></span><span></span><span></span>
+    </label>
+    <nav class="site-nav" aria-label="Hauptnavigation">
+      {nav.map((item) => <a href={item.href}>{item.label}</a>)}
+      <a href={`${base}mitglied-werden/`} class="btn btn-primary nav-cta">Mitglied werden</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--linie);
+  }
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-block: 0.6rem;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    text-decoration: none;
+    color: var(--tinte);
+  }
+  .brand-jester { height: 46px; width: auto; }
+  .brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+  .brand-text strong { font-size: 1.05rem; letter-spacing: -0.01em; }
+  .brand-text small { color: var(--tinte-soft); font-size: 0.72rem; }
+  .site-nav { display: flex; align-items: center; gap: 1.4rem; }
+  .site-nav a:not(.nav-cta) {
+    text-decoration: none;
+    color: var(--tinte);
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .site-nav a:not(.nav-cta):hover { color: var(--kgn-rot); }
+  .nav-cta { padding: 0.55rem 1.2rem; font-size: 0.9rem; }
+  .nav-toggle, .nav-burger { display: none; }
+
+  @media (max-width: 860px) {
+    .nav-burger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    .nav-burger span {
+      width: 24px;
+      height: 3px;
+      border-radius: 2px;
+      background: var(--tinte);
+    }
+    .site-nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      background: var(--papier);
+      border-bottom: 1px solid var(--linie);
+      padding: 1rem clamp(1rem, 4vw, 2rem) 1.5rem;
+      box-shadow: var(--schatten);
+    }
+    .nav-toggle:checked ~ .site-nav { display: flex; }
+  }
+</style>

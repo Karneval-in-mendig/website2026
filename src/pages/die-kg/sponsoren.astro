@@ -1,0 +1,63 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const base = import.meta.env.BASE_URL;
+const sponsoren = (await getCollection('sponsoren')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name, 'de')
+);
+---
+<Base title="Sponsoren">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Die KG</span>
+      <h1>Unsere Sponsoren</h1>
+      <p class="prose">
+        Unsere Sponsoren sind wichtige Partner, die uns helfen, die mit dem Karneval in Verbindung
+        stehenden Aufgaben zu bewältigen. Ohne sie wäre die Organisation und Durchführung unseres
+        weithin bekannten Sitzungskarnevals nicht möglich! Daher danken wir an dieser Stelle ganz
+        ausdrücklich den nachfolgend genannten Firmen.
+      </p>
+      {sponsoren.length > 0 ? (
+        <div class="sponsor-grid">
+          {sponsoren.map((s) => (
+            <a class="card sponsor" href={s.data.url} target="_blank" rel="noopener">
+              {s.data.logo ? (
+                <img src={`${base}${s.data.logo.replace(/^\//, '')}`} alt={s.data.name} loading="lazy" />
+              ) : (
+                <span class="sponsor-name">{s.data.name}</span>
+              )}
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p class="prose"><em>Die Sponsorenliste wird gerade aktualisiert.</em></p>
+      )}
+      <div class="card sponsor-cta">
+        <h2>Sie möchten uns unterstützen?</h2>
+        <p>Wir freuen uns über jeden Partner an unserer Seite. Sprechen Sie uns gerne an!</p>
+        <a href={`${base}die-kg/kontakt/`} class="btn btn-primary">Kontakt aufnehmen</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .sponsor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.25rem;
+    margin-block: 2.5rem;
+  }
+  .sponsor {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    min-height: 120px;
+    text-decoration: none;
+  }
+  .sponsor img { max-height: 80px; width: auto; }
+  .sponsor-name { font-weight: 700; color: var(--tinte); text-align: center; }
+  .sponsor-cta { padding: 2rem; margin-top: 2.5rem; text-align: center; }
+  .sponsor-cta p { color: var(--tinte-soft); }
+</style>

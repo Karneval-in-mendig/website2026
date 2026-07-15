@@ -1,0 +1,180 @@
+---
+import Base from '../layouts/Base.astro';
+const base = import.meta.env.BASE_URL;
+---
+<Base title="Mitglied werden">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Werde Teil der KGN</span>
+      <h1>Mitglied werden</h1>
+      <p class="prose">
+        Du willst den Mendiger Karneval unterstützen oder aktiv mitgestalten? Dann werde Mitglied
+        der KG Niedermendig 1897 e.V.! Der Antrag funktioniert vollständig online: Formular
+        ausfüllen, absenden und den Bestätigungslink in der E-Mail anklicken – fertig, kein
+        Ausdrucken mehr nötig. Die Höhe des Mitgliedsbeitrags ergibt sich aus der jeweils gültigen
+        Beitragsordnung bzw. Satzung.
+      </p>
+
+      <form class="card antrag-form" method="post" action="/api/antrag.php" id="antrag" novalidate>
+        <fieldset>
+          <legend>Persönliche Angaben</legend>
+          <div class="feld-grid">
+            <label>Vorname *<input type="text" name="vorname" required autocomplete="given-name" /></label>
+            <label>Name *<input type="text" name="name" required autocomplete="family-name" /></label>
+            <label>Geschlecht
+              <select name="geschlecht">
+                <option value="">– bitte wählen –</option>
+                <option value="weiblich">weiblich</option>
+                <option value="maennlich">männlich</option>
+                <option value="divers">divers</option>
+              </select>
+            </label>
+            <label>Geburtsdatum *<input type="date" name="geburtsdatum" required autocomplete="bday" /></label>
+            <label class="breit">Straße &amp; Hausnummer *<input type="text" name="strasse" required autocomplete="street-address" /></label>
+            <label>PLZ *<input type="text" name="plz" required inputmode="numeric" pattern="[0-9]{5}" autocomplete="postal-code" /></label>
+            <label>Ort *<input type="text" name="ort" required autocomplete="address-level2" /></label>
+            <label>Telefon / Handy<input type="tel" name="telefon" autocomplete="tel" /></label>
+            <label>E-Mail *<input type="email" name="email" required autocomplete="email" /></label>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>SEPA-Lastschriftmandat</legend>
+          <div class="feld-grid">
+            <label>Kontoinhaber *<input type="text" name="kontoinhaber" required /></label>
+            <label>Kreditinstitut *<input type="text" name="kreditinstitut" required /></label>
+            <label class="breit">IBAN *<input type="text" name="iban" required spellcheck="false" placeholder="DE.." /><span class="iban-status" id="iban-status"></span></label>
+            <label>BIC<input type="text" name="bic" spellcheck="false" /></label>
+          </div>
+          <p class="mandat-text">
+            Hiermit ermächtige ich die KG Niedermendig 1897 e.V. widerruflich, den für mich gültigen
+            Mitgliedsbeitrag zu Lasten meines oben bezeichneten Girokontos mittels Lastschrift
+            einzuziehen. Die Einzugsermächtigung gilt auch dann weiter, wenn der Mitgliedsbeitrag auf
+            Beschluss der Vollversammlung erhöht wird. Wenn mein Konto die erforderliche Deckung
+            nicht aufweist, besteht seitens des kontoführenden Kreditinstitutes keine Verpflichtung
+            zur Einlösung. Kosten für nicht eingelöste Lastschriften gehen zu meinen Lasten. Die
+            Einzugsermächtigung kann ich jederzeit widerrufen.
+          </p>
+          <label class="checkbox">
+            <input type="checkbox" name="sepa_ok" required />
+            <span>Ich erteile das oben stehende SEPA-Lastschriftmandat. *</span>
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Einwilligungen</legend>
+          <label class="checkbox">
+            <input type="checkbox" name="fotos_ok" />
+            <span>
+              Ich bin damit einverstanden, dass Bildnisse von mir / unserem Kind auf der
+              Internetseite, den Social-Media-Kanälen des Vereins sowie in den örtlichen Zeitungen
+              veröffentlicht werden dürfen (§ 22 KUG). Eine Vergütung erfolgt nicht. Diese
+              Einwilligung ist freiwillig und jederzeit widerrufbar.
+            </span>
+          </label>
+          <label class="checkbox">
+            <input type="checkbox" name="beitritt_ok" required />
+            <span>
+              Hiermit beantrage ich die Aufnahme in die Karnevalsgesellschaft Niedermendig 1897 e.V.
+              Ich erkläre meinen Beitritt unter Berücksichtigung der mir bekannten Satzung und
+              unterstütze den Verein mit einem Mitgliedsbeitrag gemäß Beitragsordnung. Meine Daten
+              dürfen im Rahmen der <a href={`${base}die-kg/datenschutz/`}>Datenschutzerklärung</a>
+              verarbeitet werden. *
+            </span>
+          </label>
+        </fieldset>
+
+        <input type="text" name="website" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <input type="hidden" name="ts" id="ts" />
+        <button type="submit" class="btn btn-primary">Antrag absenden</button>
+        <p class="form-hinweis">
+          * Pflichtfelder · Nach dem Absenden erhältst du eine E-Mail mit einem Bestätigungslink.
+          Erst mit dem Klick auf diesen Link werden Antrag und SEPA-Mandat wirksam eingereicht.
+        </p>
+      </form>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // IBAN-Prüfsummen-Validierung (MOD 97-10, ISO 13616)
+  function ibanGueltig(iban: string): boolean {
+    const s = iban.replace(/\s+/g, '').toUpperCase();
+    if (!/^[A-Z]{2}[0-9]{2}[A-Z0-9]{11,30}$/.test(s)) return false;
+    const umgestellt = s.slice(4) + s.slice(0, 4);
+    const ziffern = umgestellt.replace(/[A-Z]/g, (c) => String(c.charCodeAt(0) - 55));
+    let rest = 0;
+    for (let i = 0; i < ziffern.length; i += 7) {
+      rest = Number(String(rest) + ziffern.slice(i, i + 7)) % 97;
+    }
+    return rest === 1;
+  }
+
+  const form = document.getElementById('antrag') as HTMLFormElement | null;
+  if (form) {
+    (document.getElementById('ts') as HTMLInputElement).value = String(Date.now());
+    const ibanFeld = form.elements.namedItem('iban') as HTMLInputElement;
+    const status = document.getElementById('iban-status')!;
+    ibanFeld.addEventListener('blur', () => {
+      if (!ibanFeld.value.trim()) { status.textContent = ''; return; }
+      const ok = ibanGueltig(ibanFeld.value);
+      status.textContent = ok ? '✓ IBAN gültig' : '✗ IBAN ungültig – bitte prüfen';
+      status.className = 'iban-status ' + (ok ? 'ok' : 'fehler');
+      ibanFeld.setCustomValidity(ok ? '' : 'Ungültige IBAN');
+    });
+    form.addEventListener('submit', (e) => {
+      if (!form.reportValidity()) e.preventDefault();
+    });
+  }
+</script>
+
+<style>
+  .antrag-form {
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    margin-top: 2.5rem;
+    max-width: 820px;
+    display: grid;
+    gap: 2rem;
+  }
+  fieldset { border: none; margin: 0; padding: 0; }
+  legend {
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    padding: 0;
+  }
+  .feld-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .feld-grid .breit { grid-column: 1 / -1; }
+  label { display: grid; gap: 0.3rem; font-weight: 600; font-size: 0.92rem; }
+  input:not([type='checkbox']), select {
+    padding: 0.7rem 0.9rem;
+    border: 1px solid var(--linie);
+    border-radius: 8px;
+    font: inherit;
+  }
+  input:focus, select:focus { outline: 2px solid var(--kgn-blau); outline-offset: 1px; }
+  .checkbox {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    font-weight: 400;
+    margin-top: 0.8rem;
+  }
+  .checkbox input { margin-top: 0.3rem; }
+  .mandat-text {
+    font-size: 0.85rem;
+    color: var(--tinte-soft);
+    background: var(--papier-warm);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    margin-top: 1rem;
+  }
+  .iban-status { font-size: 0.82rem; font-weight: 600; min-height: 1em; }
+  .iban-status.ok { color: #0a7d33; }
+  .iban-status.fehler { color: var(--kgn-rot); }
+  .hp { position: absolute; left: -9999px; }
+  .form-hinweis { margin: 0; font-size: 0.82rem; color: var(--tinte-soft); }
+</style>

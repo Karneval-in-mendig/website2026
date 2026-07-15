@@ -1,0 +1,34 @@
+---
+import Base from '../layouts/Base.astro';
+import TerminListe from '../components/TerminListe.astro';
+import { getCollection } from 'astro:content';
+
+const heute = new Date();
+heute.setHours(0, 0, 0, 0);
+const alle = (await getCollection('termine')).sort(
+  (a, b) => a.data.datum.getTime() - b.data.datum.getTime()
+);
+const kommende = alle.filter((t) => t.data.datum >= heute);
+const vergangene = alle.filter((t) => t.data.datum < heute).reverse();
+---
+<Base title="Termine">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Session 2027</span>
+      <h1>Termine</h1>
+      <p class="prose">Alle Veranstaltungen der KG Niedermendig 1897 e.V. auf einen Blick.</p>
+      <TerminListe termine={kommende} />
+      {vergangene.length > 0 && (
+        <details class="vergangene">
+          <summary>Vergangene Termine ({vergangene.length})</summary>
+          <TerminListe termine={vergangene} kompakt />
+        </details>
+      )}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .vergangene { margin-top: 2.5rem; }
+  .vergangene summary { cursor: pointer; font-weight: 700; margin-bottom: 1rem; }
+</style>

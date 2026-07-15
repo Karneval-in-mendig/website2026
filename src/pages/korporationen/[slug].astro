@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const korporationen = await getCollection('korporationen');
+  return korporationen
+    .filter((k) => !k.data.externe_url)
+    .map((k) => ({ params: { slug: k.id }, props: { korporation: k } }));
+}
+
+const base = import.meta.env.BASE_URL;
+const { korporation } = Astro.props;
+const { Content } = await render(korporation);
+const d = korporation.data;
+---
+<Base title={d.name}>
+  <section class="korp-hero" style={`--akzent: ${d.farbe}`}>
+    <div class="container">
+      <span class="eyebrow" style={`color: ${d.farbe === '#ffcc00' ? 'var(--tinte)' : d.farbe}`}>Korporation der KGN</span>
+      <h1>{d.name}</h1>
+      {d.claim && <p class="korp-claim">{d.claim}</p>}
+    </div>
+  </section>
+  <section class="section">
+    <div class="container korp-layout">
+      <div class="prose">
+        <Content />
+        {d.instagram && (
+          <p>
+            <a href={`https://www.instagram.com/${d.instagram}/`} target="_blank" rel="noopener" class="btn btn-primary">
+              @{d.instagram} auf Instagram ↗
+            </a>
+          </p>
+        )}
+      </div>
+      <aside class="card korp-kontakt">
+        <h3>Mitmachen?</h3>
+        {d.ansprechpartner && <p><strong>{d.ansprechpartner}</strong><br />{d.email && <a href={`mailto:${d.email}`}>{d.email}</a>}</p>}
+        {!d.ansprechpartner && d.email && <p><a href={`mailto:${d.email}`}>{d.email}</a></p>}
+        <a href={`${base}die-kg/kontakt/`} class="btn btn-secondary">Kontakt aufnehmen</a>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .korp-hero {
+    background: linear-gradient(120deg, var(--papier-warm), var(--papier));
+    border-bottom: 5px solid var(--akzent);
+    padding-block: clamp(2.5rem, 7vw, 4.5rem);
+  }
+  .korp-claim { font-size: 1.2rem; color: var(--tinte-soft); margin: 0; }
+  .korp-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 3rem;
+    align-items: start;
+  }
+  .korp-kontakt { padding: 1.6rem; position: sticky; top: 90px; }
+  .korp-kontakt .btn { margin-top: 0.8rem; font-size: 0.9rem; padding: 0.6rem 1.2rem; }
+  @media (max-width: 820px) {
+    .korp-layout { grid-template-columns: 1fr; }
+    .korp-kontakt { position: static; }
+  }
+</style>

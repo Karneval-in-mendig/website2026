@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const base = import.meta.env.BASE_URL;
+const vorstand = (await getCollection('vorstand')).sort(
+  (a, b) => a.data.reihenfolge - b.data.reihenfolge
+);
+---
+<Base title="Der Vorstand">
+  <section class="section">
+    <div class="container">
+      <span class="eyebrow">Die KG</span>
+      <h1>Der Vorstand</h1>
+      <div class="vorstand-grid">
+        {vorstand.map((m) => (
+          <article class="card person">
+            <img
+              src={m.data.foto ? `${base}${m.data.foto.replace(/^\//, '')}` : `${base}images/vorstand/platzhalter.svg`}
+              alt={`Foto von ${m.data.name}`}
+              loading="lazy"
+            />
+            <div class="person-info">
+              <p class="person-funktion">{m.data.funktion}</p>
+              <h3>{m.data.name}</h3>
+              {m.data.korporation && <p class="person-korp">{m.data.korporation}</p>}
+              {m.data.email && <a href={`mailto:${m.data.email}`} class="person-mail">{m.data.email}</a>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .vorstand-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+  }
+  .person { overflow: hidden; }
+  .person img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: var(--papier-warm);
+  }
+  .person-info { padding: 1.1rem 1.3rem 1.3rem; }
+  .person-funktion {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--kgn-rot);
+  }
+  .person h3 { margin: 0.15rem 0; font-size: 1.15rem; }
+  .person-korp { margin: 0; color: var(--tinte-soft); font-size: 0.9rem; }
+  .person-mail { font-size: 0.85rem; word-break: break-all; }
+</style>

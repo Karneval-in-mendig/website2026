@@ -1,0 +1,109 @@
+/* ===== KGN Design-System =====
+   Markenfarben aus KGN_Logos.svg (digital): Rot #d40000, Blau #0000d4, Gelb #ffcc00 */
+:root {
+  --kgn-rot: #d40000;
+  --kgn-rot-dunkel: #a30000;
+  --kgn-blau: #0000d4;
+  --kgn-gelb: #ffcc00;
+  --tinte: #1a1a24;
+  --tinte-soft: #4a4a58;
+  --papier: #ffffff;
+  --papier-warm: #faf7f2;
+  --linie: #e8e4dc;
+  --radius: 14px;
+  --schatten: 0 2px 24px rgba(26, 26, 36, 0.08);
+  --max-breite: 1120px;
+  --font: 'Inter var', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--tinte);
+  background: var(--papier);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; }
+a { color: var(--kgn-rot); }
+a:hover { color: var(--kgn-rot-dunkel); }
+
+h1, h2, h3, h4 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 800;
+  margin: 0 0 0.5em;
+}
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+h3 { font-size: 1.25rem; }
+
+.container {
+  max-width: var(--max-breite);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.section { padding-block: clamp(3rem, 8vw, 5.5rem); }
+.section-warm { background: var(--papier-warm); }
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--kgn-rot);
+  margin-bottom: 0.75rem;
+}
+
+.btn {
+  display: inline-block;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-primary {
+  background: var(--kgn-rot);
+  color: #fff !important;
+  box-shadow: 0 4px 16px rgba(212, 0, 0, 0.3);
+}
+.btn-secondary {
+  background: transparent;
+  color: var(--tinte) !important;
+  border: 2px solid var(--tinte);
+}
+.btn-gelb {
+  background: var(--kgn-gelb);
+  color: var(--tinte) !important;
+  box-shadow: 0 4px 16px rgba(255, 204, 0, 0.35);
+}
+
+.card {
+  background: var(--papier);
+  border: 1px solid var(--linie);
+  border-radius: var(--radius);
+  box-shadow: var(--schatten);
+}
+
+/* Konfetti-Akzentlinie */
+.konfetti-linie {
+  height: 6px;
+  background: linear-gradient(90deg,
+    var(--kgn-rot) 0 25%, var(--kgn-gelb) 25% 50%,
+    var(--kgn-blau) 50% 75%, var(--kgn-rot-dunkel) 75% 100%);
+}
+
+.prose { max-width: 46rem; }
+.prose p { margin: 0 0 1.1em; }
+.prose ul, .prose ol { padding-left: 1.3rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
