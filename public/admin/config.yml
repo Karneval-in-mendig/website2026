@@ -1,14 +1,16 @@
 # Decap CMS Konfiguration – KGN Redaktion
 #
 # Lokal testen:  npx decap-server  (und local_backend greift automatisch)
-# Produktiv:     GitHub-Backend; base_url muss auf den OAuth-Proxy zeigen
-#                (Cloudflare Worker, siehe docs/cms-setup.md)
+# Produktiv:     GitHub-Backend; der Login läuft über unser selbst gehostetes
+#                php/oauth.php auf dem IONOS-Webspace (siehe docs/cms-setup.md).
+#                Sobald die Domain live ist, die beiden Zeilen einkommentieren:
 
 backend:
   name: github
   repo: Karneval-in-mendig/website2026
   branch: main
-  # base_url: https://kgn-oauth.<account>.workers.dev   # OAuth-Proxy, siehe docs/cms-setup.md
+  # base_url: https://karneval-in-mendig.de
+  # auth_endpoint: api/oauth.php
   commit_messages:
     create: "Inhalt erstellt: {{collection}} „{{slug}}“"
     update: "Inhalt geändert: {{collection}} „{{slug}}“"

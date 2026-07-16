@@ -25,4 +25,8 @@ return [
 
     // Mindest-Ausfüllzeit in Sekunden (Spam-Schutz Time-Trap)
     'min_dauer'        => 15,
+
+    // GitHub OAuth App für den CMS-Login unter /admin (siehe docs/cms-setup.md)
+    'github_client_id'     => '',
+    'github_client_secret' => '',
 ];
