@@ -1,0 +1,101 @@
+# DEMO-Modus für die Staging-Site: kein Login nötig, Änderungen werden
+# NICHT gespeichert (In-Memory). Nur zum Ausprobieren der Redaktionsoberfläche.
+backend:
+  name: test-repo
+
+local_backend: false
+locale: de
+site_url: https://karneval-in-mendig.github.io/website2026
+media_folder: public/images/uploads
+public_folder: images/uploads
+
+collections:
+  - name: termine
+    label: Termine
+    label_singular: Termin
+    folder: src/content/termine
+    create: true
+    slug: "{{fields.datum}}-{{slug}}"
+    identifier_field: titel
+    sortable_fields: [titel, datum]
+    fields:
+      - { name: titel, label: Titel }
+      - { name: datum, label: Datum, widget: datetime, format: "YYYY-MM-DD", date_format: "DD.MM.YYYY", time_format: false }
+      - { name: uhrzeit, label: Uhrzeit, required: false, hint: "z. B. 19:11 Uhr" }
+      - { name: ort, label: Ort, default: "Mendig, Laacher-See-Halle" }
+      - name: kategorie
+        label: Kategorie
+        widget: select
+        default: sonstiges
+        options:
+          - { label: Sitzung, value: sitzung }
+          - { label: Umzug, value: umzug }
+          - { label: Party, value: party }
+          - { label: Vereinstermin, value: verein }
+          - { label: Sonstiges, value: sonstiges }
+      - { name: ticketlink, label: Ticket-Link, required: false, hint: "Vollständige URL zum Vorverkauf" }
+      - { name: beschreibung, label: Kurzbeschreibung, required: false, widget: text }
+      - { name: body, label: " ", widget: hidden, default: "" }
+
+  - name: vorstand
+    label: Vorstand
+    label_singular: Vorstandsmitglied
+    folder: src/content/vorstand
+    create: true
+    identifier_field: name
+    summary: "{{funktion}}: {{name}}"
+    sortable_fields: [reihenfolge, name]
+    fields:
+      - { name: name, label: Name }
+      - { name: funktion, label: Funktion, hint: "z. B. 1. Vorsitzender" }
+      - { name: korporation, label: Korporation, required: false }
+      - { name: email, label: E-Mail, required: false }
+      - { name: foto, label: Foto, widget: image, required: false }
+      - { name: reihenfolge, label: Reihenfolge, widget: number, default: 99, hint: "Bestimmt die Sortierung auf der Seite" }
+      - { name: body, label: " ", widget: hidden, default: "" }
+
+  - name: korporationen
+    label: Korporationen
+    label_singular: Korporation
+    folder: src/content/korporationen
+    create: true
+    identifier_field: name
+    sortable_fields: [reihenfolge, name]
+    fields:
+      - { name: name, label: Name }
+      - { name: kurzname, label: Kurzname, required: false, hint: "Für Kacheln, falls der Name lang ist" }
+      - { name: claim, label: Motto / Claim, required: false }
+      - { name: farbe, label: Akzentfarbe, widget: color, default: "#d40000" }
+      - { name: logo, label: Logo, widget: image, required: false }
+      - { name: bild, label: Titelbild, widget: image, required: false }
+      - { name: externe_url, label: "Externe Website", required: false, hint: "Wenn gesetzt, verlinkt die Kachel dorthin statt auf eine eigene Unterseite" }
+      - { name: instagram, label: Instagram-Handle, required: false, hint: "ohne @" }
+      - { name: ansprechpartner, label: Ansprechpartner, required: false }
+      - { name: email, label: E-Mail, required: false }
+      - { name: reihenfolge, label: Reihenfolge, widget: number, default: 99 }
+      - { name: body, label: Vorstellungstext, widget: markdown }
+
+  - name: sponsoren
+    label: Sponsoren
+    label_singular: Sponsor
+    folder: src/content/sponsoren
+    create: true
+    identifier_field: name
+    fields:
+      - { name: name, label: Name }
+      - { name: logo, label: Logo, widget: image, required: false }
+      - { name: url, label: Website, required: false }
+      - { name: body, label: " ", widget: hidden, default: "" }
+
+  - name: news
+    label: Aktuelles
+    label_singular: Beitrag
+    folder: src/content/news
+    create: true
+    identifier_field: titel
+    sortable_fields: [datum, titel]
+    fields:
+      - { name: titel, label: Titel }
+      - { name: datum, label: Datum, widget: datetime, format: "YYYY-MM-DD", time_format: false }
+      - { name: teaser, label: Teaser, required: false, widget: text }
+      - { name: body, label: Text, widget: markdown }

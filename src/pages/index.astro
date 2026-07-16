@@ -61,7 +61,11 @@ const news = (await getCollection('news')).sort(
             rel={k.data.externe_url ? 'noopener' : undefined}
             style={`--akzent: ${k.data.farbe}`}
           >
-            <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
+            {k.data.logo ? (
+              <img class="korp-logo" src={`${base}${k.data.logo.replace(/^\//, '')}`} alt="" loading="lazy" />
+            ) : (
+              <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
+            )}
             <h3>{k.data.kurzname ?? k.data.name}</h3>
             <p>{k.data.claim}</p>
             <span class="korp-mehr">{k.data.externe_url ? 'Zur eigenen Website ↗' : 'Mehr erfahren →'}</span>
@@ -163,6 +167,14 @@ const news = (await getCollection('news')).sort(
     flex-direction: column;
   }
   .korp-karte:hover { transform: translateY(-4px); box-shadow: var(--schatten-hover); }
+  .korp-logo {
+    height: 44px;
+    width: auto;
+    max-width: 120px;
+    object-fit: contain;
+    align-self: flex-start;
+    margin-bottom: 1rem;
+  }
   .korp-badge {
     width: 44px;
     height: 44px;

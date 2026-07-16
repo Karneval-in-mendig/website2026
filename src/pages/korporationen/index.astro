@@ -24,7 +24,11 @@ const korporationen = (await getCollection('korporationen')).sort(
             rel={k.data.externe_url ? 'noopener' : undefined}
             style={`--akzent: ${k.data.farbe}`}
           >
-            <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
+            {k.data.logo ? (
+              <img class="korp-logo" src={`${base}${k.data.logo.replace(/^\//, '')}`} alt="" loading="lazy" />
+            ) : (
+              <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
+            )}
             <div class="korp-text">
               <h2>{k.data.name}</h2>
               <p>{k.data.claim}</p>
@@ -49,6 +53,13 @@ const korporationen = (await getCollection('korporationen')).sort(
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
   .korp-zeile:hover { transform: translateX(6px); box-shadow: var(--schatten-hover); }
+  .korp-logo {
+    flex: none;
+    height: 54px;
+    width: auto;
+    max-width: 140px;
+    object-fit: contain;
+  }
   .korp-badge {
     flex: none;
     width: 54px;
