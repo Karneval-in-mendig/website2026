@@ -170,16 +170,38 @@ const news = (await getCollection('news')).sort(
     display: flex;
     flex-direction: column;
   }
-  .korp-karte:hover { transform: translateY(-4px); box-shadow: var(--schatten-hover); }
+  .korp-karte:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 36px color-mix(in srgb, var(--akzent) 22%, transparent);
+    outline: 1px solid color-mix(in srgb, var(--akzent) 35%, transparent);
+  }
   .korp-media {
-    height: 52px;
+    align-self: flex-start;
+    height: 60px;
+    min-width: 60px;
+    padding: 0 10px;
     display: flex;
     align-items: center;
+    justify-content: center;
     margin-bottom: 1rem;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--akzent) 9%, transparent);
+  }
+  .korp-karte:hover .korp-media {
+    background: color-mix(in srgb, var(--akzent) 16%, transparent);
+  }
+  @media (prefers-color-scheme: dark) {
+    /* Logos brauchen im Dunkeln eine helle Flaeche (z. B. dunkelblaue Wortmarken) */
+    .korp-media:has(.korp-logo) {
+      background: color-mix(in srgb, var(--akzent) 10%, #fff);
+    }
+    .korp-karte:hover .korp-media:has(.korp-logo) {
+      background: color-mix(in srgb, var(--akzent) 18%, #fff);
+    }
   }
   .korp-logo {
-    max-height: 52px;
-    max-width: 120px;
+    max-height: 48px;
+    max-width: 110px;
     object-fit: contain;
   }
   .korp-badge {

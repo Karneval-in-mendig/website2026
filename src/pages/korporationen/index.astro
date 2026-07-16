@@ -55,17 +55,35 @@ const korporationen = (await getCollection('korporationen')).sort((a, b) =>
     color: var(--tinte);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .korp-zeile:hover { transform: translateX(6px); box-shadow: var(--schatten-hover); }
+  .korp-zeile:hover {
+    transform: translateX(6px);
+    box-shadow: 0 12px 32px color-mix(in srgb, var(--akzent) 22%, transparent);
+    outline: 1px solid color-mix(in srgb, var(--akzent) 35%, transparent);
+  }
   .korp-media {
     flex: none;
     width: 120px;
-    height: 64px;
+    height: 72px;
     display: grid;
     place-items: center;
+    border-radius: 14px;
+    background: color-mix(in srgb, var(--akzent) 9%, transparent);
+  }
+  .korp-zeile:hover .korp-media {
+    background: color-mix(in srgb, var(--akzent) 16%, transparent);
+  }
+  @media (prefers-color-scheme: dark) {
+    /* Logos brauchen im Dunkeln eine helle Flaeche (z. B. dunkelblaue Wortmarken) */
+    .korp-media:has(.korp-logo) {
+      background: color-mix(in srgb, var(--akzent) 10%, #fff);
+    }
+    .korp-zeile:hover .korp-media:has(.korp-logo) {
+      background: color-mix(in srgb, var(--akzent) 18%, #fff);
+    }
   }
   .korp-logo {
-    max-height: 64px;
-    max-width: 120px;
+    max-height: 60px;
+    max-width: 108px;
     object-fit: contain;
   }
   .korp-badge {
