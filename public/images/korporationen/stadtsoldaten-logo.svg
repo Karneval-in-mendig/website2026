@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="440" height="120" viewBox="0 0 440 120" role="img" aria-label="Stadtsoldaten 1935 Mendig">
+  <!-- Nachbau der Wortmarke von stadtsoldaten-mendig.de (dort nur HTML/CSS-Text) -->
+  <text x="220" y="52" text-anchor="middle" font-family="'Gentium Basic', Georgia, 'Times New Roman', serif" font-size="52" fill="#002498">Stadtsoldaten</text>
+  <rect x="120" y="68" width="200" height="3" fill="#ffcc00"/>
+  <text x="220" y="102" text-anchor="middle" font-family="'Gentium Basic', Georgia, 'Times New Roman', serif" font-size="26" letter-spacing="8" fill="#1a1a1a">1935 Mendig</text>
+</svg>

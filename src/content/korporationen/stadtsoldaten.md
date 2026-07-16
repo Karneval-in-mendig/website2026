@@ -4,6 +4,7 @@ claim: "Mendigs Garde – in Reih und Glied für den Karneval."
 farbe: "#0000d4"
 reihenfolge: 3
 externe_url: "http://stadtsoldaten-mendig.de"
+logo: "images/korporationen/stadtsoldaten-logo.svg"
 email: "stadtsoldaten@karneval-in-mendig.de"
 ansprechpartner: "Sebastian Marx"
 ---

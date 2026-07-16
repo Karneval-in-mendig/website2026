@@ -4,6 +4,7 @@ claim: "Mendiger Original – jeck aus Tradition."
 farbe: "#d40000"
 reihenfolge: 4
 externe_url: "http://schloffmoetschen.de"
+logo: "images/korporationen/schloffmoetschen-logo.png"
 email: "beisitzer2@karneval-in-mendig.de"
 ansprechpartner: "Christian Ammel"
 ---
