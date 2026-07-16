@@ -19,12 +19,7 @@ const korporationen = (await getCollection('korporationen')).sort((a, b) =>
       <div class="korp-liste" data-shuffle>
         {korporationen.map((k) => (
           <div class="korp-zeile card" style={`--akzent: ${k.data.farbe}`}>
-            <a
-              href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
-              class="korp-zeile-link"
-              target={k.data.externe_url ? '_blank' : undefined}
-              rel={k.data.externe_url ? 'noopener' : undefined}
-            >
+            <a href={`${base}korporationen/${k.id}/`} class="korp-zeile-link">
               <span class="korp-media">
                 {k.data.logo ? (
                   <img class="korp-logo" src={`${base}${k.data.logo.replace(/^\//, '')}`} alt="" loading="lazy" />
@@ -36,15 +31,18 @@ const korporationen = (await getCollection('korporationen')).sort((a, b) =>
                 <h2>{k.data.name}</h2>
                 <p>{k.data.claim}</p>
               </div>
-              <span class="korp-mehr">{k.data.externe_url ? 'Eigene Website ↗' : 'Mehr erfahren →'}</span>
+              <span class="korp-mehr">Mehr erfahren →</span>
             </a>
-            {(k.data.instagram || k.data.youtube) && (
+            {(k.data.externe_url || k.data.instagram || k.data.youtube) && (
               <div class="korp-social-mini">
+                {k.data.externe_url && (
+                  <a href={k.data.externe_url} target="_blank" rel="noopener">Website ↗</a>
+                )}
                 {k.data.instagram && (
-                  <a href={`https://www.instagram.com/${k.data.instagram}/`} target="_blank" rel="noopener">Instagram</a>
+                  <a href={`https://www.instagram.com/${k.data.instagram}/`} target="_blank" rel="noopener">Instagram ↗</a>
                 )}
                 {k.data.youtube && (
-                  <a href={k.data.youtube} target="_blank" rel="noopener">YouTube</a>
+                  <a href={k.data.youtube} target="_blank" rel="noopener">YouTube ↗</a>
                 )}
               </div>
             )}

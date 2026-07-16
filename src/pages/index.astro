@@ -57,12 +57,7 @@ const news = (await getCollection('news')).sort(
       <div class="korp-grid" data-shuffle>
         {korporationen.map((k) => (
           <div class="korp-karte card" style={`--akzent: ${k.data.farbe}`}>
-            <a
-              href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
-              class="korp-karte-link"
-              target={k.data.externe_url ? '_blank' : undefined}
-              rel={k.data.externe_url ? 'noopener' : undefined}
-            >
+            <a href={`${base}korporationen/${k.id}/`} class="korp-karte-link">
               <span class="korp-media">
                 {k.data.logo ? (
                   <img class="korp-logo" src={`${base}${k.data.logo.replace(/^\//, '')}`} alt="" loading="lazy" />
@@ -72,15 +67,18 @@ const news = (await getCollection('news')).sort(
               </span>
               <h3>{k.data.kurzname ?? k.data.name}</h3>
               <p>{k.data.claim}</p>
-              <span class="korp-mehr">{k.data.externe_url ? 'Zur eigenen Website ↗' : 'Mehr erfahren →'}</span>
+              <span class="korp-mehr">Mehr erfahren →</span>
             </a>
-            {(k.data.instagram || k.data.youtube) && (
+            {(k.data.externe_url || k.data.instagram || k.data.youtube) && (
               <div class="korp-social-mini">
+                {k.data.externe_url && (
+                  <a href={k.data.externe_url} target="_blank" rel="noopener">Website ↗</a>
+                )}
                 {k.data.instagram && (
-                  <a href={`https://www.instagram.com/${k.data.instagram}/`} target="_blank" rel="noopener">Instagram</a>
+                  <a href={`https://www.instagram.com/${k.data.instagram}/`} target="_blank" rel="noopener">Instagram ↗</a>
                 )}
                 {k.data.youtube && (
-                  <a href={k.data.youtube} target="_blank" rel="noopener">YouTube</a>
+                  <a href={k.data.youtube} target="_blank" rel="noopener">YouTube ↗</a>
                 )}
               </div>
             )}

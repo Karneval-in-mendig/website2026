@@ -4,9 +4,7 @@ import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
   const korporationen = await getCollection('korporationen');
-  return korporationen
-    .filter((k) => !k.data.externe_url)
-    .map((k) => ({ params: { slug: k.id }, props: { korporation: k } }));
+  return korporationen.map((k) => ({ params: { slug: k.id }, props: { korporation: k } }));
 }
 
 const base = import.meta.env.BASE_URL;
@@ -26,10 +24,15 @@ const d = korporation.data;
     <div class="container korp-layout">
       <div class="prose">
         <Content />
-        {(d.instagram || d.youtube) && (
+        {(d.externe_url || d.instagram || d.youtube) && (
           <p class="korp-social">
+            {d.externe_url && (
+              <a href={d.externe_url} target="_blank" rel="noopener" class="btn btn-primary">
+                Zur eigenen Website ↗
+              </a>
+            )}
             {d.instagram && (
-              <a href={`https://www.instagram.com/${d.instagram}/`} target="_blank" rel="noopener" class="btn btn-primary">
+              <a href={`https://www.instagram.com/${d.instagram}/`} target="_blank" rel="noopener" class={`btn ${d.externe_url ? 'btn-secondary' : 'btn-primary'}`}>
                 @{d.instagram} auf Instagram ↗
               </a>
             )}
