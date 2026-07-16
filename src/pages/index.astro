@@ -10,8 +10,10 @@ const termine = (await getCollection('termine'))
   .filter((t) => t.data.datum >= heute)
   .sort((a, b) => a.data.datum.getTime() - b.data.datum.getTime())
   .slice(0, 3);
-const korporationen = (await getCollection('korporationen')).sort(
-  (a, b) => a.data.reihenfolge - b.data.reihenfolge
+// Neutrales Fallback: alphabetisch; per JS wird bei jedem Aufruf gemischt
+// (kein Hierarchie-Gerangel zwischen den Korporationen)
+const korporationen = (await getCollection('korporationen')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name, 'de')
 );
 const news = (await getCollection('news')).sort(
   (a, b) => b.data.datum.getTime() - a.data.datum.getTime()
@@ -52,7 +54,7 @@ const news = (await getCollection('news')).sort(
       <span class="eyebrow">Wir sind die KGN</span>
       <h2>Unsere Korporationen</h2>
       <p class="prose">Sechs Korporationen, ein Verein: Bei uns findet jede und jeder seinen Platz im Mendiger Karneval.</p>
-      <div class="korp-grid">
+      <div class="korp-grid" data-shuffle>
         {korporationen.map((k) => (
           <a
             href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
@@ -200,3 +202,15 @@ const news = (await getCollection('news')).sort(
   .news-karte h3 { font-size: 1.05rem; }
   .news-karte p { color: var(--tinte-soft); font-size: 0.95rem; }
 </style>
+
+<script>
+  // Korporationen bei jedem Aufruf zufällig anordnen (Fisher-Yates)
+  document.querySelectorAll('[data-shuffle]').forEach((el) => {
+    const kinder = Array.from(el.children);
+    for (let i = kinder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [kinder[i], kinder[j]] = [kinder[j], kinder[i]];
+    }
+    kinder.forEach((k) => el.appendChild(k));
+  });
+</script>

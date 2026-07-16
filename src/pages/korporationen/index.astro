@@ -2,8 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 const base = import.meta.env.BASE_URL;
-const korporationen = (await getCollection('korporationen')).sort(
-  (a, b) => a.data.reihenfolge - b.data.reihenfolge
+// Neutrales Fallback: alphabetisch; per JS wird bei jedem Aufruf gemischt
+const korporationen = (await getCollection('korporationen')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name, 'de')
 );
 ---
 <Base title="Korporationen">
@@ -15,7 +16,7 @@ const korporationen = (await getCollection('korporationen')).sort(
         Die KG Niedermendig 1897 e.V. lebt durch ihre Korporationen – jede mit eigenem Charakter,
         alle mit demselben Ziel: den Mendiger Karneval unvergesslich zu machen.
       </p>
-      <div class="korp-liste">
+      <div class="korp-liste" data-shuffle>
         {korporationen.map((k) => (
           <a
             href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
@@ -81,3 +82,14 @@ const korporationen = (await getCollection('korporationen')).sort(
     .korp-zeile { flex-direction: column; align-items: flex-start; }
   }
 </style>
+
+<script>
+  document.querySelectorAll('[data-shuffle]').forEach((el) => {
+    const kinder = Array.from(el.children);
+    for (let i = kinder.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [kinder[i], kinder[j]] = [kinder[j], kinder[i]];
+    }
+    kinder.forEach((k) => el.appendChild(k));
+  });
+</script>
