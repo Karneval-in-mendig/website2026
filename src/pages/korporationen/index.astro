@@ -24,7 +24,8 @@ const korporationen = (await getCollection('korporationen')).sort(
             rel={k.data.externe_url ? 'noopener' : undefined}
             style={`--akzent: ${k.data.farbe}`}
           >
-            <div>
+            <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
+            <div class="korp-text">
               <h2>{k.data.name}</h2>
               <p>{k.data.claim}</p>
             </div>
@@ -40,19 +41,31 @@ const korporationen = (await getCollection('korporationen')).sort(
   .korp-liste { display: grid; gap: 1.2rem; margin-top: 2.5rem; }
   .korp-zeile {
     display: flex;
-    justify-content: space-between;
     align-items: center;
     gap: 1.5rem;
-    padding: 1.8rem 2rem;
+    padding: 1.6rem 2rem;
     text-decoration: none;
     color: var(--tinte);
-    border-left: 6px solid var(--akzent);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .korp-zeile:hover { transform: translateX(6px); box-shadow: 0 8px 32px rgba(26, 26, 36, 0.14); }
+  .korp-zeile:hover { transform: translateX(6px); box-shadow: var(--schatten-hover); }
+  .korp-badge {
+    flex: none;
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    display: grid;
+    place-items: center;
+    background: var(--akzent);
+    color: #fff;
+    font-weight: 850;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--akzent) 35%, transparent);
+  }
+  .korp-text { flex: 1; }
   .korp-zeile h2 { font-size: 1.4rem; margin-bottom: 0.2rem; }
   .korp-zeile p { margin: 0; color: var(--tinte-soft); }
-  .korp-mehr { font-weight: 700; color: var(--akzent); white-space: nowrap; }
+  .korp-mehr { font-weight: 700; color: var(--kgn-rot); white-space: nowrap; }
   @media (max-width: 600px) {
     .korp-zeile { flex-direction: column; align-items: flex-start; }
   }

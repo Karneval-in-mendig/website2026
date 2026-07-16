@@ -55,6 +55,7 @@ const sponsoren = (await getCollection('sponsoren')).sort((a, b) =>
     padding: 1.5rem;
     min-height: 120px;
     text-decoration: none;
+    background: #fff; /* Logos brauchen hellen Grund – auch im Dark Mode */
   }
   .sponsor img { max-height: 80px; width: auto; }
   .sponsor-name { font-weight: 700; color: var(--tinte); text-align: center; }

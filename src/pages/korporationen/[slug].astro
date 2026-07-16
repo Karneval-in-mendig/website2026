@@ -46,8 +46,9 @@ const d = korporation.data;
 
 <style>
   .korp-hero {
-    background: linear-gradient(120deg, var(--papier-warm), var(--papier));
-    border-bottom: 5px solid var(--akzent);
+    background:
+      radial-gradient(900px 420px at 85% -20%, color-mix(in srgb, var(--akzent) 16%, transparent), transparent 65%),
+      linear-gradient(120deg, var(--papier-warm), var(--papier));
     padding-block: clamp(2.5rem, 7vw, 4.5rem);
   }
   .korp-claim { font-size: 1.2rem; color: var(--tinte-soft); margin: 0; }

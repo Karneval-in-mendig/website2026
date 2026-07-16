@@ -9,8 +9,10 @@ backend:
   name: github
   repo: Karneval-in-mendig/website2026
   branch: main
-  # base_url: https://karneval-in-mendig.de
-  # auth_endpoint: api/oauth.php
+  # Login läuft über unser selbst gehostetes oauth.php auf dem IONOS-Webspace
+  # (funktioniert, sobald die Dateien dort liegen – siehe docs/cms-login-aktivieren.md)
+  base_url: https://karneval-in-mendig.de
+  auth_endpoint: api/oauth.php
   commit_messages:
     create: "Inhalt erstellt: {{collection}} „{{slug}}“"
     update: "Inhalt geändert: {{collection}} „{{slug}}“"

@@ -1,21 +1,41 @@
 /* ===== KGN Design-System =====
    Markenfarben aus KGN_Logos.svg (digital): Rot #d40000, Blau #0000d4, Gelb #ffcc00 */
 :root {
+  color-scheme: light dark;
   --kgn-rot: #db0000;
   --kgn-rot-dunkel: #a30000;
   --kgn-blau: #0000d4;
   --kgn-gelb: #ffcc00;
   --tinte: #14141f;
-  --tinte-2: #1e1e2d;
   --tinte-soft: #52525f;
   --papier: #ffffff;
   --papier-warm: #f6f5f2;
+  --karte: #ffffff;
   --linie: #e4e2dd;
+  --kopf-bg: rgba(255, 255, 255, 0.85);
+  --fuss-bg: #14141f;
   --radius: 18px;
   --schatten: 0 1px 2px rgba(20, 20, 31, 0.05), 0 8px 28px rgba(20, 20, 31, 0.07);
   --schatten-hover: 0 2px 4px rgba(20, 20, 31, 0.06), 0 16px 44px rgba(20, 20, 31, 0.14);
   --max-breite: 1160px;
   --font: 'Inter var', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --kgn-rot: #ff3b30;          /* auf dunklem Grund besser lesbares Markenrot */
+    --kgn-rot-dunkel: #ff6259;
+    --kgn-blau: #7a7aff;
+    --tinte: #ececf2;
+    --tinte-soft: #a2a2b2;
+    --papier: #101018;
+    --papier-warm: #16161f;
+    --karte: #1b1b26;
+    --linie: #2a2a38;
+    --kopf-bg: rgba(16, 16, 24, 0.82);
+    --schatten: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 28px rgba(0, 0, 0, 0.35);
+    --schatten-hover: 0 2px 4px rgba(0, 0, 0, 0.4), 0 16px 44px rgba(0, 0, 0, 0.5);
+  }
 }
 
 * { box-sizing: border-box; }
@@ -95,7 +115,7 @@ h3 { font-size: 1.25rem; }
 .btn-gelb:hover { background: #ffd633; }
 
 .card {
-  background: var(--papier);
+  background: var(--karte);
   border: 1px solid var(--linie);
   border-radius: var(--radius);
   box-shadow: var(--schatten);
