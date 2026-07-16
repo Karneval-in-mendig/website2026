@@ -56,24 +56,35 @@ const news = (await getCollection('news')).sort(
       <p class="prose">Sechs Korporationen, ein Verein: Bei uns findet jede und jeder seinen Platz im Mendiger Karneval.</p>
       <div class="korp-grid" data-shuffle>
         {korporationen.map((k) => (
-          <a
-            href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
-            class="korp-karte card"
-            target={k.data.externe_url ? '_blank' : undefined}
-            rel={k.data.externe_url ? 'noopener' : undefined}
-            style={`--akzent: ${k.data.farbe}`}
-          >
-            <span class="korp-media">
-              {k.data.logo ? (
-                <img class="korp-logo" src={`${base}${k.data.logo.replace(/^\//, '')}`} alt="" loading="lazy" />
-              ) : (
-                <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
-              )}
-            </span>
-            <h3>{k.data.kurzname ?? k.data.name}</h3>
-            <p>{k.data.claim}</p>
-            <span class="korp-mehr">{k.data.externe_url ? 'Zur eigenen Website ↗' : 'Mehr erfahren →'}</span>
-          </a>
+          <div class="korp-karte card" style={`--akzent: ${k.data.farbe}`}>
+            <a
+              href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
+              class="korp-karte-link"
+              target={k.data.externe_url ? '_blank' : undefined}
+              rel={k.data.externe_url ? 'noopener' : undefined}
+            >
+              <span class="korp-media">
+                {k.data.logo ? (
+                  <img class="korp-logo" src={`${base}${k.data.logo.replace(/^\//, '')}`} alt="" loading="lazy" />
+                ) : (
+                  <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
+                )}
+              </span>
+              <h3>{k.data.kurzname ?? k.data.name}</h3>
+              <p>{k.data.claim}</p>
+              <span class="korp-mehr">{k.data.externe_url ? 'Zur eigenen Website ↗' : 'Mehr erfahren →'}</span>
+            </a>
+            {(k.data.instagram || k.data.youtube) && (
+              <div class="korp-social-mini">
+                {k.data.instagram && (
+                  <a href={`https://www.instagram.com/${k.data.instagram}/`} target="_blank" rel="noopener">Instagram</a>
+                )}
+                {k.data.youtube && (
+                  <a href={k.data.youtube} target="_blank" rel="noopener">YouTube</a>
+                )}
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>
@@ -164,16 +175,21 @@ const news = (await getCollection('news')).sort(
   }
   .korp-karte {
     padding: 1.6rem;
-    text-decoration: none;
-    color: var(--tinte);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
     display: flex;
     flex-direction: column;
   }
-  .korp-karte:hover {
+  .korp-karte:has(.korp-karte-link:hover) {
     transform: translateY(-4px);
     box-shadow: 0 14px 36px color-mix(in srgb, var(--akzent) 22%, transparent);
     outline: 1px solid color-mix(in srgb, var(--akzent) 35%, transparent);
+  }
+  .korp-karte-link {
+    text-decoration: none;
+    color: var(--tinte);
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
   .korp-media {
     align-self: flex-start;
@@ -187,7 +203,7 @@ const news = (await getCollection('news')).sort(
     border-radius: 14px;
     background: color-mix(in srgb, var(--akzent) 9%, transparent);
   }
-  .korp-karte:hover .korp-media {
+  .korp-karte-link:hover .korp-media {
     background: color-mix(in srgb, var(--akzent) 16%, transparent);
   }
   @media (prefers-color-scheme: dark) {
@@ -195,7 +211,7 @@ const news = (await getCollection('news')).sort(
     .korp-media:has(.korp-logo) {
       background: color-mix(in srgb, var(--akzent) 10%, #fff);
     }
-    .korp-karte:hover .korp-media:has(.korp-logo) {
+    .korp-karte-link:hover .korp-media:has(.korp-logo) {
       background: color-mix(in srgb, var(--akzent) 18%, #fff);
     }
   }
@@ -219,6 +235,20 @@ const news = (await getCollection('news')).sort(
   .korp-karte h3 { margin-bottom: 0.3rem; }
   .korp-karte p { color: var(--tinte-soft); flex: 1; margin: 0 0 1rem; }
   .korp-mehr { font-weight: 700; color: var(--kgn-rot); font-size: 0.92rem; }
+  .korp-social-mini {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--linie);
+  }
+  .korp-social-mini a {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--tinte-soft);
+    text-decoration: none;
+  }
+  .korp-social-mini a:hover { color: var(--kgn-rot); }
   .gruss-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));

@@ -6,6 +6,8 @@ reihenfolge: 4
 externe_url: "http://schloffmoetschen.de"
 logo: "images/korporationen/schloffmoetschen-logo.png"
 email: "beisitzer2@karneval-in-mendig.de"
+instagram: "schloffmoetschen"
+youtube: "https://www.youtube.com/@deschloffmotschen3172"
 ansprechpartner: "Christian Ammel"
 ---
 

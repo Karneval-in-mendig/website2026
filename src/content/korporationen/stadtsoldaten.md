@@ -6,6 +6,7 @@ reihenfolge: 3
 externe_url: "http://stadtsoldaten-mendig.de"
 logo: "images/korporationen/stadtsoldaten-logo.svg"
 email: "stadtsoldaten@karneval-in-mendig.de"
+instagram: "stadtsoldaten_1935_mendig"
 ansprechpartner: "Sebastian Marx"
 ---
 

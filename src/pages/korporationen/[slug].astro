@@ -26,11 +26,18 @@ const d = korporation.data;
     <div class="container korp-layout">
       <div class="prose">
         <Content />
-        {d.instagram && (
-          <p>
-            <a href={`https://www.instagram.com/${d.instagram}/`} target="_blank" rel="noopener" class="btn btn-primary">
-              @{d.instagram} auf Instagram ↗
-            </a>
+        {(d.instagram || d.youtube) && (
+          <p class="korp-social">
+            {d.instagram && (
+              <a href={`https://www.instagram.com/${d.instagram}/`} target="_blank" rel="noopener" class="btn btn-primary">
+                @{d.instagram} auf Instagram ↗
+              </a>
+            )}
+            {d.youtube && (
+              <a href={d.youtube} target="_blank" rel="noopener" class="btn btn-secondary">
+                Auf YouTube ↗
+              </a>
+            )}
           </p>
         )}
       </div>
@@ -52,6 +59,7 @@ const d = korporation.data;
     padding-block: clamp(2.5rem, 7vw, 4.5rem);
   }
   .korp-claim { font-size: 1.2rem; color: var(--tinte-soft); margin: 0; }
+  .korp-social { display: flex; flex-wrap: wrap; gap: 0.75rem; }
   .korp-layout {
     display: grid;
     grid-template-columns: 1fr 300px;

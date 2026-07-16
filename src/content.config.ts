@@ -37,6 +37,7 @@ const korporationen = defineCollection({
     bild: z.string().optional(),
     externe_url: z.string().url().optional(),
     instagram: z.string().optional(),
+    youtube: z.string().url().optional(),
     ansprechpartner: z.string().optional(),
     email: z.string().optional(),
     reihenfolge: z.number().default(99),

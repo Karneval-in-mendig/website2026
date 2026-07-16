@@ -87,6 +87,7 @@ collections:
       - { name: bild, label: Titelbild, widget: image, required: false }
       - { name: externe_url, label: "Externe Website", required: false, hint: "Wenn gesetzt, verlinkt die Kachel dorthin statt auf eine eigene Unterseite" }
       - { name: instagram, label: Instagram-Handle, required: false, hint: "ohne @" }
+      - { name: youtube, label: "YouTube-Kanal (URL)", widget: string, required: false }
       - { name: ansprechpartner, label: Ansprechpartner, required: false }
       - { name: email, label: E-Mail, required: false }
       - { name: reihenfolge, label: Reihenfolge, widget: number, default: 99 }

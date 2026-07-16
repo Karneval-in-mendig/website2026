@@ -18,26 +18,37 @@ const korporationen = (await getCollection('korporationen')).sort((a, b) =>
       </p>
       <div class="korp-liste" data-shuffle>
         {korporationen.map((k) => (
-          <a
-            href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
-            class="korp-zeile card"
-            target={k.data.externe_url ? '_blank' : undefined}
-            rel={k.data.externe_url ? 'noopener' : undefined}
-            style={`--akzent: ${k.data.farbe}`}
-          >
-            <span class="korp-media">
-              {k.data.logo ? (
-                <img class="korp-logo" src={`${base}${k.data.logo.replace(/^\//, '')}`} alt="" loading="lazy" />
-              ) : (
-                <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
-              )}
-            </span>
-            <div class="korp-text">
-              <h2>{k.data.name}</h2>
-              <p>{k.data.claim}</p>
-            </div>
-            <span class="korp-mehr">{k.data.externe_url ? 'Eigene Website ↗' : 'Mehr erfahren →'}</span>
-          </a>
+          <div class="korp-zeile card" style={`--akzent: ${k.data.farbe}`}>
+            <a
+              href={k.data.externe_url ?? `${base}korporationen/${k.id}/`}
+              class="korp-zeile-link"
+              target={k.data.externe_url ? '_blank' : undefined}
+              rel={k.data.externe_url ? 'noopener' : undefined}
+            >
+              <span class="korp-media">
+                {k.data.logo ? (
+                  <img class="korp-logo" src={`${base}${k.data.logo.replace(/^\//, '')}`} alt="" loading="lazy" />
+                ) : (
+                  <span class="korp-badge" aria-hidden="true">{(k.data.kurzname ?? k.data.name).charAt(0)}</span>
+                )}
+              </span>
+              <div class="korp-text">
+                <h2>{k.data.name}</h2>
+                <p>{k.data.claim}</p>
+              </div>
+              <span class="korp-mehr">{k.data.externe_url ? 'Eigene Website ↗' : 'Mehr erfahren →'}</span>
+            </a>
+            {(k.data.instagram || k.data.youtube) && (
+              <div class="korp-social-mini">
+                {k.data.instagram && (
+                  <a href={`https://www.instagram.com/${k.data.instagram}/`} target="_blank" rel="noopener">Instagram</a>
+                )}
+                {k.data.youtube && (
+                  <a href={k.data.youtube} target="_blank" rel="noopener">YouTube</a>
+                )}
+              </div>
+            )}
+          </div>
         ))}
       </div>
     </div>
@@ -47,18 +58,20 @@ const korporationen = (await getCollection('korporationen')).sort((a, b) =>
 <style>
   .korp-liste { display: grid; gap: 1.2rem; margin-top: 2.5rem; }
   .korp-zeile {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
     padding: 1.6rem 2rem;
-    text-decoration: none;
-    color: var(--tinte);
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .korp-zeile:hover {
+  .korp-zeile:has(.korp-zeile-link:hover) {
     transform: translateX(6px);
     box-shadow: 0 12px 32px color-mix(in srgb, var(--akzent) 22%, transparent);
     outline: 1px solid color-mix(in srgb, var(--akzent) 35%, transparent);
+  }
+  .korp-zeile-link {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    text-decoration: none;
+    color: var(--tinte);
   }
   .korp-media {
     flex: none;
@@ -69,7 +82,7 @@ const korporationen = (await getCollection('korporationen')).sort((a, b) =>
     border-radius: 14px;
     background: color-mix(in srgb, var(--akzent) 9%, transparent);
   }
-  .korp-zeile:hover .korp-media {
+  .korp-zeile-link:hover .korp-media {
     background: color-mix(in srgb, var(--akzent) 16%, transparent);
   }
   @media (prefers-color-scheme: dark) {
@@ -77,7 +90,7 @@ const korporationen = (await getCollection('korporationen')).sort((a, b) =>
     .korp-media:has(.korp-logo) {
       background: color-mix(in srgb, var(--akzent) 10%, #fff);
     }
-    .korp-zeile:hover .korp-media:has(.korp-logo) {
+    .korp-zeile-link:hover .korp-media:has(.korp-logo) {
       background: color-mix(in srgb, var(--akzent) 18%, #fff);
     }
   }
@@ -102,8 +115,24 @@ const korporationen = (await getCollection('korporationen')).sort((a, b) =>
   .korp-zeile h2 { font-size: 1.4rem; margin-bottom: 0.2rem; }
   .korp-zeile p { margin: 0; color: var(--tinte-soft); }
   .korp-mehr { font-weight: 700; color: var(--kgn-rot); white-space: nowrap; }
+  .korp-social-mini {
+    display: flex;
+    gap: 1.2rem;
+    margin-top: 0.9rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--linie);
+    padding-left: calc(120px + 1.5rem);
+  }
+  .korp-social-mini a {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--tinte-soft);
+    text-decoration: none;
+  }
+  .korp-social-mini a:hover { color: var(--kgn-rot); }
   @media (max-width: 600px) {
-    .korp-zeile { flex-direction: column; align-items: flex-start; }
+    .korp-zeile-link { flex-direction: column; align-items: flex-start; }
+    .korp-social-mini { padding-left: 0; }
   }
 </style>
 
