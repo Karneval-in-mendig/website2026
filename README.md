@@ -25,8 +25,5 @@ npx decap-server         # optional: CMS lokal unter /website2026/admin/
 
 - **Phase 1 (jetzt):** Push auf `main` → GitHub Action baut und deployt auf GitHub Pages
   (Staging, `noindex`).
-- **Phase 2 (Livegang):** SFTP-Deploy nach IONOS (siehe Kommentar in
-  `.github/workflows/deploy.yml`), `SITE`/`BASE` umstellen, `php/` nach `/api/`
-  deployen, `php/config.php` aus `php/config.example.php` erzeugen,
-  `noindex`-Meta in `src/layouts/Base.astro` entfernen, Redirects alter
-  WordPress-URLs einrichten.
+- **Phase 2 (Livegang):** Kompletter Fahrplan inkl. IONOS-Migration,
+  Mail-Konfiguration, SEPA/Bank und Rollback-Plan: **[docs/go-live.md](docs/go-live.md)**
