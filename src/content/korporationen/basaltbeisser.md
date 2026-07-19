@@ -2,7 +2,7 @@
 name: "Basaltbeißer"
 claim: "Ungewöhnliche Sketche, überraschende Acts."
 farbe: "#e01b24"
-logo: "images/korporationen/basaltbeisser-logo.svg"
+logo: "images/korporationen/basaltbeisser-logo.png"
 reihenfolge: 6
 email: "geschaeftsstelle@karneval-in-mendig.de"
 ---
